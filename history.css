@@ -2339,3 +2339,12 @@
     margin-left: auto;
     margin-right: auto
 }
+
+.history-interactive .tribute-number,
+.history-interactive .tribute-unit,
+.history-interactive .tribute-phrase,
+.history-interactive .tribute-dates {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+}
