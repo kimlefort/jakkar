@@ -6,14 +6,36 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const escape = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const safeURL = value => /^(javascript|data|vbscript):/i.test(String(value).trim()) ? '' : escape(value);
-  const demoKey = 'jakkar-demo-notice-seen-v1';
+  const demoKey = 'jakkar-demo-notice-seen-v2';
   let demoSeen = false;
   try { demoSeen = sessionStorage.getItem(demoKey) === 'true'; } catch { }
   if (!demoSeen) {
     const dialog = document.createElement('dialog');
     dialog.className = 'demo-gate';
     dialog.setAttribute('aria-labelledby', 'demo-gate-title');
-    dialog.innerHTML = `<div class="demo-gate-topline"><span class="demo-studio"><i class="demo-studio-mark" aria-hidden="true"><b></b><b></b><b></b><b></b></i>laplace labs<span>.</span></span><span>Jakkar / Interactive demo</span></div><div class="demo-gate-body"><div class="demo-gate-copy"><p class="demo-gate-kicker">Demo presentation / 01</p><h2 id="demo-gate-title">Built to show<br>the <em>direction.</em></h2><p>This preview presents a proposed website direction for Jakkar Marketing Corporation.</p></div><aside class="demo-gate-note"><span>Before we publish</span><strong>Review the pieces that make it real.</strong><ul><li>Photography and company history</li><li>Partner brands and vacancies</li><li>Contact and site information</li></ul><small>These details require Jakkar’s confirmation.</small></aside></div><div class="demo-gate-action"><button class="button" type="button" data-enter-demo>Enter the demo <span aria-hidden="true">↘</span></button><span>Prepared for review</span></div>`;
+    dialog.setAttribute('aria-describedby', 'demo-gate-description');
+    dialog.innerHTML = `
+      <div class="demo-gate-topline">
+        <span class="demo-studio"><i class="demo-studio-mark" aria-hidden="true"><b></b><b></b><b></b><b></b></i>laplace labs<span>.</span></span>
+        <span class="demo-gate-topline-note">Prepared for Jakkar</span>
+      </div>
+      <div class="demo-gate-body">
+        <span class="demo-gate-label">Jakkar website demo</span>
+        <h2 id="demo-gate-title">This is a <em>demo.</em></h2>
+        <p id="demo-gate-description" class="demo-gate-intro">A proposed website experience by Laplace Labs. Explore how Jakkar’s story, services, and four sites could come together online.</p>
+        <div class="demo-gate-details">
+          <h3>What to know before exploring</h3>
+          <ul>
+            <li>Photos and history are illustrative, not verified company records.</li>
+            <li>Partner brands, job posts, and contact details are sample content.</li>
+            <li>Inquiry forms are not connected to Jakkar’s inbox yet.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="demo-gate-action">
+        <button class="button" type="button" data-enter-demo>Explore the demo <span aria-hidden="true">↗</span></button>
+        <span>A Laplace Labs presentation</span>
+      </div>`;
     document.body.append(dialog);
     const enter = dialog.querySelector('[data-enter-demo]');
     const dismiss = () => { try { sessionStorage.setItem(demoKey, 'true'); } catch { } dialog.close?.(); dialog.remove(); document.body.classList.remove('demo-is-open'); };
